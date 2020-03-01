@@ -32,6 +32,8 @@ public class InsulinDeliveryStore: HealthKitSampleStore {
     private let queue = DispatchQueue(label: "com.loopkit.InsulinKit.InsulinDeliveryStore.queue", qos: .utility)
 
     private let log = OSLog(category: "InsulinDeliveryStore")
+    
+    private var lastPurge: Date = Date()
 
     /// The most-recent end date for a basal sample written by LoopKit
     /// Should only be accessed on dataAccessQueue
@@ -92,8 +94,11 @@ public class InsulinDeliveryStore: HealthKitSampleStore {
                 }
             }
 
-            let cachePredicate = NSPredicate(format: "startDate < %@", self.earliestCacheDate as NSDate)
-            self.purgeCachedObjects(matching: cachePredicate)
+            if Date().timeIntervalSince(self.lastPurge) > TimeInterval(5 * 60) {
+                let cachePredicate = NSPredicate(format: "startDate < %@", self.earliestCacheDate as NSDate)
+                self.purgeCachedObjects(matching: cachePredicate)
+                self.lastPurge = Date()
+            }
 
             if cacheChanged || self.lastBasalEndDate == nil {
                 self.updateLastBasalEndDate()
