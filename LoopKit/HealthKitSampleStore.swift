@@ -156,7 +156,7 @@ public class HealthKitSampleStore {
             anchor: self.queryAnchor,
             limit: HKObjectQueryNoLimit
         ) { (query, newSamples, deletedSamples, anchor, error) in
-            self.log.debug("%@: new: %d deleted: %d anchor: %@ error: %@", #function, newSamples?.count ?? 0, deletedSamples?.count ?? 0, String(describing: anchor), String(describing: error))
+            self.log.default("%{public}@: new: %{public}d deleted: %{public}d anchor: %{public}@ error: %{public}@", #function, newSamples?.count ?? 0, deletedSamples?.count ?? 0, String(describing: anchor), String(describing: error))
 
             if let error = error {
                 self.log.error("%@: error executing anchoredObjectQuery: %@", String(describing: type(of: self)), error.localizedDescription)
