@@ -19,7 +19,7 @@ Pod::Spec.new do |spec|
   spec.source        = { :git => "https://github.com/jonfawcett/Loopkit.git", :tag => "v#{spec.version}" }
 
   spec.source_files  = "**/*"
-  spec.exclude_files = "**/*.{plist}" "**/*.xcassets"
+  spec.exclude_files = "**/*.{plist}" "**/Contents.json"
 
 
   # ――― Project Settings ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
